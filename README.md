@@ -100,6 +100,28 @@ npm run server
 npm run client
 ```
 
+## 🌐 Deployment
+
+### Frontend (GitHub Pages)
+El frontend se despliega automáticamente en GitHub Pages cuando se hace push a `main`.
+- **URL**: https://lauracsdev.github.io/aera-sorteos/
+- **Deploy automático**: Configurado con GitHub Actions
+
+### Backend (Requiere hosting separado)
+El servidor Node.js necesita ser hosteado en un servicio compatible:
+- **Render** (recomendado - gratis): https://render.com
+- **Railway**: https://railway.app
+- **Vercel**: https://vercel.com
+- **Fly.io**: https://fly.io
+
+#### Variables de entorno para producción:
+```env
+PORT=3001
+INSTAGRAM_SESSION_ID=tu_session_id
+```
+
+Después de hostear el backend, actualiza la URL del API en el frontend.
+
 ## 🏗️ Estructura del Proyecto
 
 ```
