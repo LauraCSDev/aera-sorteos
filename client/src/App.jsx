@@ -5,7 +5,7 @@ import RulesConfig from "./components/RulesConfig";
 import CommentsPreview from "./components/CommentsPreview";
 import WinnerDisplay from "./components/WinnerDisplay";
 import HistorySection from "./components/HistorySection";
-import axios from "axios";
+import { apiClient } from "./config";
 
 function App() {
   const [step, setStep] = useState(1);
@@ -26,17 +26,17 @@ function App() {
     setError("");
 
     try {
-      const response = await axios.post("/api/fetch-comments", {
+      const response = await apiClient.post("/api/fetch-comments", {
         postUrl: url,
       });
 
-      if (response.data.success) {
-        setComments(response.data.comments);
+      if (response.success) {
+        setComments(response.comments);
         setPostUrl(url);
         setStep(2);
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.response?.data?.error || "Error al obtener comentarios");
+      setError(err.message || "Error al obtener comentarios");
     } finally {
       setLoading(false);
     }
@@ -47,18 +47,18 @@ function App() {
     setError("");
 
     try {
-      const response = await axios.post("/api/run-raffle", {
+      const response = await apiClient.post("/api/run-raffle", {
         postUrl,
         comments,
         rules,
       });
 
-      if (response.data.success) {
-        setWinner(response.data);
+      if (response.success) {
+        setWinner(response);
         setStep(3);
       }
     } catch (err) {
-      setError(err.response?.data?.error || "Error al ejecutar el sorteo");
+      setError(err.message || "Error al ejecutar el sorteo");
     } finally {
       setLoading(false);
     }

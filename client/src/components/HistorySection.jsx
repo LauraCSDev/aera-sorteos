@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { History, Trophy, Calendar, Users } from 'lucide-react';
-import axios from 'axios';
+import { apiClient } from '../config';
 
 function HistorySection() {
   const [raffles, setRaffles] = useState([]);
@@ -12,9 +12,9 @@ function HistorySection() {
 
   const fetchRaffles = async () => {
     try {
-      const response = await axios.get('/api/raffles');
-      if (response.data.success) {
-        setRaffles(response.data.raffles);
+      const response = await apiClient.get('/api/raffles');
+      if (response.success) {
+        setRaffles(response.raffles);
       }
     } catch (error) {
       console.error('Error fetching raffles:', error);

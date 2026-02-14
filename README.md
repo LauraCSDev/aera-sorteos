@@ -26,11 +26,25 @@ cp .env.example .env
 
 ## 🔧 Configuración
 
-Edita el archivo `.env` con tus credenciales:
+### Backend
+
+Edita el archivo `.env` en la raíz del proyecto con tus credenciales:
 
 ```env
 PORT=3001
 INSTAGRAM_SESSION_ID=tu_session_id_aqui
+```
+
+### Frontend
+
+Edita el archivo `client/.env` con la URL de tu backend:
+
+```env
+# En desarrollo local
+VITE_API_URL=http://localhost:3001
+
+# En producción (después de hostear el backend)
+VITE_API_URL=https://tu-backend.onrender.com
 ```
 
 ### 🔑 Obtener Instagram Session ID (Para posts reales)
@@ -102,25 +116,44 @@ npm run client
 
 ## 🌐 Deployment
 
-### Frontend (GitHub Pages)
-El frontend se despliega automáticamente en GitHub Pages cuando se hace push a `main`.
-- **URL**: https://lauracsdev.github.io/aera-sorteos/
-- **Deploy automático**: Configurado con GitHub Actions
+### Paso 1: Hostear el Backend
 
-### Backend (Requiere hosting separado)
-El servidor Node.js necesita ser hosteado en un servicio compatible:
+El servidor Node.js necesita ser hosteado primero en un servicio compatible:
 - **Render** (recomendado - gratis): https://render.com
 - **Railway**: https://railway.app
 - **Vercel**: https://vercel.com
 - **Fly.io**: https://fly.io
 
-#### Variables de entorno para producción:
+**Variables de entorno para el backend:**
 ```env
 PORT=3001
 INSTAGRAM_SESSION_ID=tu_session_id
 ```
 
-Después de hostear el backend, actualiza la URL del API en el frontend.
+Una vez hosteado, copia la URL del backend (ej: `https://aera-sorteos.onrender.com`)
+
+### Paso 2: Configurar el Frontend
+
+1. Ve a tu repositorio en GitHub
+2. Settings → Secrets and variables → Actions
+3. Agrega un nuevo secret llamado `VITE_API_URL` con la URL de tu backend
+
+### Paso 3: Activar GitHub Pages
+
+1. Ve a Settings → Pages
+2. En **Source**, selecciona **"GitHub Actions"**
+3. El frontend se desplegará automáticamente en: https://lauracsdev.github.io/aera-sorteos/
+
+### Actualización Manual del Frontend
+
+Si prefieres actualizar localmente antes de desplegar:
+
+```bash
+cd client
+# Edita el archivo .env con la URL de producción
+echo "VITE_API_URL=https://tu-backend.onrender.com" > .env
+npm run build
+```
 
 ## 🏗️ Estructura del Proyecto
 
